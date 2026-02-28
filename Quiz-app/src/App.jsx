@@ -1,26 +1,34 @@
+import { Routes, Route } from "react-router-dom";
 import QuizStart from "./components/QuizStart";
-import { useState } from "react";
+import QuestionCard from "./components/QuestionCard";
+import ScoreSummary from "./components/ScoreSummary";
+import QuizHistory from "./components/QuizHistory";
+import { useQuizStore } from "./store/quizStore";
 
 function App() {
-    const [started, setStarted] = useState(false);
-    const questions = [
-  {
-    question: "What is 2 + 2?",
-    correct_answer: "4",
-    incorrect_answers: ["3", "5", "6"],
-  },
-];
-  
+  const { questions, currentQuestionIndex } = useQuizStore();
+
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gray-100">
-       {!started ? (
-        <QuizStart onStart={() => setStarted(true)} />
-      ) : (
-        <p>Quiz questions go here..</p>
-      )}
+    <div className="min-h-screen flex items-center justify-center p-4 bg-secondary">
+      <Routes>
+        <Route path="/" element={<QuizStart />} />
+
+        <Route
+          path="/quiz"
+          element={
+            questions.length > 0 && currentQuestionIndex < questions.length ? (
+              <QuestionCard />
+            ) : (
+              <ScoreSummary />
+            )
+          }
+        />
+
+        <Route path="/history" element={<QuizHistory />} />
+      </Routes>
     </div>
   );
 }
 
-
 export default App;
+

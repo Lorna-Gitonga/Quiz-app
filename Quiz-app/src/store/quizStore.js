@@ -4,7 +4,8 @@ export const useQuizStore = create((set) => ({
   questions: [],
   currentIndex: 0,
   score: 0,
-  history: [],
+  loading: false,
+  error: "",
 
   setQuestions: (questions) =>
     set({

@@ -1,45 +1,38 @@
-import { useQuizStore } from "../store/quizStore";
 import { useState } from "react";
 
-function  QuestionCard({ question, onFinish }) {
-
-  const [score, setScore] = useState(0); 
+function QuestionCard({ question, onAnswer }) {
   const [answered, setAnswered] = useState(false);
 
-  const handleAnswer = (answer) => {
-    if (answer === question.correct_answer) {
-      setScore(score + 1);
-    }
+  const handleAnswer = (selectedAnswer) => {
+    const isCorrect = selectedAnswer === question.correct_answer;
     setAnswered(true);
+    onAnswer(isCorrect);
   };
-
-    if (answered) {
-      return (
-        <div>
-        <p>Score: {score}</p>
-        <button onClick={onFinish}>Finish</button>
-      </div>
-    );
-  }
-
+   // Combine correct and incorrect answers and shuffle them for better UX
+  const allAnswers = [...question.incorrect_answers, question.correct_answer]
+    .sort(() => Math.random() - 0.5);
 
   return (
-    <div className="bg-primary text-white p-2 rounded hover:bg-primary-dark active:scale-95 transition">
-      <h2>{question.question}</h2>
-      {[question.correct_answer, ...question.incorrect_answers].map(
-        (ans, index) => (
+    <div className="bg-primary text-white p-4 rounded w-full max-w-md">
+      <h2 className="text-lg font-semibold mb-4">
+        {question.question}
+      </h2>
+
+      {!answered ? (
+        allAnswers.map((answer, index) => (
           <button
             key={index}
-            onClick={() => handleAnswer(ans)}
-            className="block bg-primary text-white p-2 m-2 rounded hover:bg-blue-600"
+            onClick={() => handleAnswer(answer)}
+            className="block w-full bg-blue-500 p-2 mb-2 rounded hover:bg-blue-600 transition"
           >
-            {ans}
+            {answer}
           </button>
-        )
+        ))
+      ) : (
+        <p className="mt-4">Answer submitted.</p>
       )}
     </div>
   );
 }
 
-
-export default  QuestionCar;
+export default QuestionCard;
