@@ -24,7 +24,7 @@ function  QuestionCard({ question, onFinish }) {
 
 
   return (
-    <div>
+    <div className="bg-primary text-white p-2 rounded hover:bg-primary-dark active:scale-95 transition">
       <h2>{question.question}</h2>
       {[question.correct_answer, ...question.incorrect_answers].map(
         (ans, index) => (
