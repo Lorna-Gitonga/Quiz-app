@@ -1,4 +1,3 @@
-// src/services/triviaApi.js
 const BASE_URL = "https://opentdb.com";
 
 export const fetchCategories = async () => {
@@ -15,7 +14,7 @@ export const fetchCategories = async () => {
 
 export const fetchQuestions = async ({ amount, category, difficulty }) => {
   try {
-    // Dynamically generate the full URL
+
     const url = `${BASE_URL}/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=multiple`;
     const res = await fetch(url);
     if (!res.ok) throw new Error("Failed to fetch questions");
