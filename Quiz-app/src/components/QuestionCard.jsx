@@ -1,21 +1,16 @@
-import { useState } from "react";
+import { useQuizStore } from "../store/quizStore";
 
-function QuizPage({ questions }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [score, setScore] = useState(0);
+function QuizPage() {
+  const { questions, currentIndex, score, answerQuestion } =
+    useQuizStore();
 
-  const handleAnswer = (isCorrect) => {
-    if (isCorrect) {
-      setScore(score + 1);
-    }
-    setCurrentIndex(currentIndex + 1);
-  };
+  const currentQuestion = questions[currentIndex];
 
   return (
     <div>
-      <h2>{questions[currentIndex].question}</h2>
-      <button onClick={() => handleAnswer(true)}>Correct</button>
-      <button onClick={() => handleAnswer(false)}>Wrong</button>
+      <h2>{currentQuestion?.question}</h2>
+      <button onClick={() => answerQuestion(true)}>Correct</button>
+      <button onClick={() => answerQuestion(false)}>Wrong</button>
       <p>Score: {score}</p>
     </div>
   );
