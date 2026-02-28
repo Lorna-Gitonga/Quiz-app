@@ -12,12 +12,16 @@ export const useQuizStore = create((set) => ({
       score: 0,
     }),
 
-  answerQuestion: (isCorrect) =>
-    set((state) => ({
-      score: isCorrect ? state.score + 1 : state.score,
-      currentIndex: state.currentIndex + 1,
-    })),
+answerQuestion: (isCorrect) =>
+  set((state) => ({
+    score: isCorrect ? state.score + 1 : state.score,
+  })),
 
+nextQuestion: () =>
+  set((state) => ({
+    currentIndex: state.currentIndex + 1,
+  })),
+  
   resetQuiz: () =>
     set({
       questions: [],
