@@ -1,19 +1,27 @@
-import { useEffect } from "react";
-import { useQuizStore } from "../store/quizStore";
+import { useQuizStore  } from "react-router-dom";
+import { useNavigate } from "../store/quizStore";
 
+export default function ScoreSummary() {
+  const { score, questions, resetQuiz } = useQuizStore();
+  const navigate = useNavigate();
 
-
-
-function ScoreSummary() {
-const { score, questions, saveResult } = useQuizStore();
-useEffect(() => {
-    saveResult();
-  }, []);
+  const handleRestart = () => {
+    resetQuiz();
+    navigate("/");
+  };
 
   return (
-    <div className="bg-white p-6 rounded shadow">
-      <h2 className="text-xl mb-4">Quiz Complete</h2>
-      <p>Your Score: {score}</p>
+    <div className="p-6 bg-white rounded shadow w-full max-w-md text-center">
+      <h2 className="text-2xl font-bold mb-4">Quiz Complete!</h2>
+      <p className="text-lg mb-6">
+        You scored {score} out of {questions.length}
+      </p>
+      <button
+        onClick={handleRestart}
+        className="p-3 w-full bg-primary text-white rounded hover:bg-blue-600 active:scale-95 transition duration-150"
+      >
+        Restart Quiz
+      </button>
     </div>
   );
 }
