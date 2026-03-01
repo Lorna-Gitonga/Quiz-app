@@ -1,38 +1,39 @@
-import { useState } from "react";
+import { useQuizStore } from "../store/quizStore";
 
-function QuestionCard({ question, onAnswer }) {
-  const [answered, setAnswered] = useState(false);
+export default function QuestionCard() {
+  const {
+    questions,
+    currentQuestionIndex,
+    nextQuestion,
+    answerQuestion,
+  } = useQuizStore();
 
-  const handleAnswer = (selectedAnswer) => {
-    const isCorrect = selectedAnswer === question.correct_answer;
-    setAnswered(true);
-    onAnswer(isCorrect);
+  const question = questions[currentQuestionIndex];
+
+  const allAnswers = [...question.incorrect_answers, question.correct_answer].sort(
+    () => Math.random() - 0.5
+  );
+
+  const handleAnswer = (answer) => {
+    answerQuestion(answer === question.correct_answer);
+    nextQuestion();
   };
-   // Combine correct and incorrect answers and shuffle them for better UX
-  const allAnswers = [...question.incorrect_answers, question.correct_answer]
-    .sort(() => Math.random() - 0.5);
 
   return (
-    <div className="bg-primary text-white p-4 rounded w-full max-w-md">
-      <h2 className="text-lg font-semibold mb-4">
-        {question.question}
-      </h2>
+    <div className="p-6 bg-white rounded shadow w-full max-w-md">
+      <h2
+        className="mb-6 font-semibold text-lg text-gray-800"
+        dangerouslySetInnerHTML={{ __html: question.question }}
+      />
 
-      {!answered ? (
-        allAnswers.map((answer, index) => (
-          <button
-            key={index}
-            onClick={() => handleAnswer(answer)}
-            className="block w-full bg-blue-500 p-2 mb-2 rounded hover:bg-blue-600 transition"
-          >
-            {answer}
-          </button>
-        ))
-      ) : (
-        <p className="mt-4">Answer submitted.</p>
-      )}
+      {allAnswers.map((ans, idx) => (
+        <button
+          key={idx}
+          onClick={() => handleAnswer(ans)}
+          className="block w-full mb-3 p-3 border rounded bg-white text-gray-800 hover:bg-primary hover:text-white active:scale-95 transition-all duration-150"
+          dangerouslySetInnerHTML={{ __html: ans }}
+        />
+      ))}
     </div>
   );
 }
-
-export default QuestionCard;

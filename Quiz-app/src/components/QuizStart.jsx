@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { fetchCategories, fetchQuestions } from "../services/triviaApi";
 import { useQuizStore } from "../store/quizStore";
@@ -10,7 +9,7 @@ export default function QuizStart() {
   const [difficulty, setDifficulty] = useState("easy");
   const [amount, setAmount] = useState(10);
 
-    const { setQuestions, setLoading, setError, loading, error } = useQuizStore();
+  const { setQuestions, setLoading, setError, loading, error } = useQuizStore();
   const navigate = useNavigate();
 
   useEffect(() => {
