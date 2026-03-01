@@ -1,5 +1,5 @@
-import { useQuizStore  } from "react-router-dom";
-import { useNavigate } from "../store/quizStore";
+import { useQuizStore } from "../store/quizStore";
+import { useNavigate } from "react-router-dom";
 
 export default function ScoreSummary() {
   const { score, questions, resetQuiz } = useQuizStore();
@@ -25,4 +25,3 @@ export default function ScoreSummary() {
     </div>
   );
 }
-
