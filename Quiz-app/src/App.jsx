@@ -8,22 +8,12 @@ import { useQuizStore } from "./store/quizStore";
 function App() {
   const { questions, currentQuestionIndex, loading } = useQuizStore();
 
-  // Show loading indicator if fetching
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-secondary">
-        <p className="text-lg text-gray-700">Loading...</p>
-      </div>
-    );
-  }
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-secondary">
       <Routes>
-        {/* Start page */}
         <Route path="/" element={<QuizStart />} />
-
-        {/* Quiz page */}
         <Route
           path="/quiz"
           element={
@@ -34,8 +24,6 @@ function App() {
             )
           }
         />
-
-        {/* History page */}
         <Route path="/history" element={<QuizHistory />} />
       </Routes>
     </div>
